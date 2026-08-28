@@ -1,0 +1,64 @@
+# =====================================================================
+#  Infraestructura local. Levantar con: docker compose up -d
+#  Versiones vigentes a agosto de 2026: PostgreSQL 18, Redis 8.
+# =====================================================================
+services:
+
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME:-biblioteca}
+      POSTGRES_USER: ${DB_USER:-biblioteca}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-biblioteca}
+    ports:
+      - "5432:5432"
+    volumes:
+      - datos_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-biblioteca} -d ${DB_NAME:-biblioteca}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:8-alpine
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - datos_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${DB_NAME:-biblioteca}
+      DB_USER: ${DB_USER:-biblioteca}
+      DB_PASSWORD: ${DB_PASSWORD:-biblioteca}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRETO: ${JWT_SECRETO:?Defina JWT_SECRETO en el archivo .env}
+      JWT_EXPIRACION_MINUTOS: ${JWT_EXPIRACION_MINUTOS:-60}
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+
+volumes:
+  datos_postgres:
+  datos_redis:

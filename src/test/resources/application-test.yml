@@ -1,0 +1,24 @@
+# Perfil de pruebas: la URL de datos la inyecta @ServiceConnection desde el
+# contenedor de PostgreSQL, por eso aqui no se declara ningun datasource.
+spring:
+  cache:
+    # Las pruebas no levantan Redis: la cache se desactiva para que el resultado
+    # dependa solo de la logica y no del estado del cache.
+    type: none
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+app:
+  jwt:
+    secreto: c2VjcmV0by1kZS1wcnVlYmFzLXNvbG8tcGFyYS10ZXN0cy1uby1lbi1wcm9kdWNjaW9u
+    expiracion-minutos: 15
+  api-externa:
+    base-url: https://openlibrary.org
+
+logging:
+  level:
+    org.testcontainers: INFO
+    com.github.dockerjava: WARN
