@@ -16,7 +16,7 @@
 | Número de carnet | 0604907956|
 | Correo institucional | ztaipem@uteq.edu.ec|
 | Fecha | 28/08/2026|
-| URL del repositorio | |
+| URL del repositorio |https://github.com/Zaida-tm18/biblioteca-u4-Taipe |
 
 ---
 
@@ -173,3 +173,7 @@ Marque con una `x` y complete:
 - [x] Declaro que estas respuestas son de mi autoría, redactadas durante la sesión de examen, sin asistencia de inteligencia artificial ni comunicación con terceros.
 
 Firma (nombre completo): Taipe Mora Zaida Melissa
+
+NOTA IMPORTANTE: Ing., disculpe. Apenas logré clonar el repositorio y se me hizo imposible realizarlo de la forma correcta; por esta razón, el repositorio solo cuenta con un commit. Sin embargo, en la carpeta evidencia adjunto la captura de mi primer commit, el cual se envió por error como una rama a su repositorio base.
+
+Sé que es una mala práctica hacer esto, pero lamentablemente tuve que salir varias veces al baño por un problema de salud que estoy atravesando en este momento, sumado a los problemas que me dio este computador para clonar el proyecto. Espero me sepa entender y me permita la entrega sin poner una nota de cero por incumplir con los criterios indicados.
